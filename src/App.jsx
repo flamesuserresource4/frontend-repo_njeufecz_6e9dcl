@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense, lazy } from 'react';
 import GradientMeshOverlay from './components/GradientMeshOverlay.jsx';
 import HeroSpline from './components/HeroSpline.jsx';
 import HeroContent from './components/HeroContent.jsx';
 import TriggersSection from './components/TriggersSection.jsx';
+import BridgeSpline from './components/BridgeSpline.jsx';
+import FontLoader from './components/FontLoader.jsx';
 
 export default function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -19,7 +21,10 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-[#1A1A1A] text-white">
+    <div className="min-h-screen w-full bg-[#1A1A1A] text-white" style={{ fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial' }}>
+      {/* Font face loader for Playfair/Inter/Space Mono */}
+      <FontLoader />
+
       {/* Hero */}
       <section className="relative h-screen w-full overflow-hidden">
         <HeroSpline scrollProgress={scrollProgress} />
@@ -31,6 +36,9 @@ export default function App() {
 
       {/* Triggers Section */}
       <TriggersSection />
+
+      {/* Bridge Spline element replacing proxy */}
+      <BridgeSpline />
 
       {/* Spacer for next content */}
       <section id="case-studies" className="h-[60vh] w-full bg-[#1F1F1F]" />

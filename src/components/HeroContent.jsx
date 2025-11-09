@@ -23,6 +23,7 @@ export default function HeroContent({ scrollProgress = 0 }) {
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
           className="font-serif text-[40px] leading-[1.05] sm:text-[54px] md:text-[64px] lg:text-[72px] text-white tracking-tight"
+          style={{ fontFamily: '"Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif' }}
         >
           Psychological Design<br />Engineered for Response
         </motion.h1>

@@ -114,12 +114,12 @@ function Card({ item, featured = false, index = 0 }) {
       whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       viewport={{ once: true, margin: '-20% 0px -20% 0px' }}
       transition={{ delay: 0.08 * index, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`group relative rounded-lg border ${featured ? 'bg-[#2C5F4D]' : 'bg-[#252525]'} ${featured ? 'border-[#3B7A64]' : 'border-[#333333]'} shadow-[inset_0_1px_0_rgba(255,255,255,0.02)] backdrop-blur-md w-full md:${featured ? 'w-[300px]' : 'w-[280px]'} h-auto md:${featured ? 'h-[360px]' : 'h-[340px]'} transition-transform`}
+      className={`group relative rounded-lg border ${featured ? 'bg-[#2C5F4D]' : 'bg-[#252525]'} ${featured ? 'border-[#3B7A64]' : 'border-[#333333]'} shadow-[inset_0_1px_0_rgba(255,255,255,0.02)] backdrop-blur-md w-full sm:w-[48%] md:${featured ? 'w-[300px]' : 'w-[280px]'} h-auto md:${featured ? 'h-[360px]' : 'h-[340px]'} transition-transform`}
     >
       <div className="pointer-events-none absolute inset-0 rounded-lg" style={{ boxShadow: 'inset 0 0 40px rgba(255,255,255,0.04)' }} />
       <div className="flex h-full flex-col p-8">
         <div className="flex items-start justify-between">
-          <span className={`font-mono text-[14px] ${featured ? 'text-white' : 'text-[#2C5F4D]'}`}>{item.n}</span>
+          <span className={`font-mono text-[14px] ${featured ? 'text-white' : 'text-[#2C5F4D]'}`} style={{ fontFamily: '"Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>{item.n}</span>
           {featured && (
             <span className="rounded-full bg-black/20 px-2 py-1 text-[10px] tracking-wide text-white/90">
               MOST POWERFUL
@@ -130,10 +130,10 @@ function Card({ item, featured = false, index = 0 }) {
           <Icon type={item.icon} />
         </div>
         <div className="mt-5">
-          <h3 className={`font-serif text-[24px] leading-tight text-white`}>{item.name}</h3>
+          <h3 className={`font-serif text-[24px] leading-tight text-white`} style={{ fontFamily: '"Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif' }}>{item.name}</h3>
         </div>
         <div className="mt-3">
-          <div className={`font-mono text-[32px] font-semibold ${featured ? 'text-white' : 'text-[#2C5F4D]'}`}>{item.metric}</div>
+          <div className={`font-mono text-[32px] font-semibold ${featured ? 'text-white' : 'text-[#2C5F4D]'}`} style={{ fontFamily: '"Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>{item.metric}</div>
         </div>
         <p className={`mt-3 text-[14px] leading-[1.6] ${featured ? 'text-white/90' : 'text-[#AAAAAA]'}`}>{item.desc}</p>
       </div>
@@ -155,7 +155,7 @@ export default function TriggersSection() {
 
   return (
     <section id="triggers" className="relative w-full bg-[#1A1A1A]">
-      <div className="mx-auto max-w-[1400px] px-6 sm:px-10 md:px-14 lg:px-20" style={{ paddingTop: 120, paddingBottom: 120 }}>
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 md:px-12 lg:px-20" style={{ paddingTop: 120, paddingBottom: 120 }}>
         {/* Headline */}
         <div className="mb-10">
           <motion.h2
@@ -164,7 +164,7 @@ export default function TriggersSection() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
             className="font-serif text-white tracking-[-0.01em] text-[40px] sm:text-[44px] md:text-[52px] lg:text-[64px] leading-tight"
-            style={{ marginLeft: '100px' }}
+            style={{ marginLeft: '100px', fontFamily: '"Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif' }}
           >
             The 12 Triggers<br />That Move Markets
           </motion.h2>
@@ -180,22 +180,22 @@ export default function TriggersSection() {
           </motion.p>
         </div>
 
-        {/* Grid */}
+        {/* Grid with responsive rhythm: 1 column (xs), 2 columns (sm), asymmetric rows (md+) */}
         <div className="flex flex-col gap-6">
-          {/* Row 1: 4 cards (wraps to single column on mobile via w-full) */}
-          <div className="flex flex-wrap gap-6">
+          {/* Row 1: 4 cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:auto-cols-max md:grid-flow-col md:[grid-auto-columns:minmax(0,auto)] gap-6">
             {rows[0].map((item, idx) => (
               <Card key={item.n} item={item} index={idx} featured={item.featured} />
             ))}
           </div>
           {/* Row 2: 3 cards */}
-          <div className="flex flex-wrap gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:auto-cols-max md:grid-flow-col md:[grid-auto-columns:minmax(0,auto)] gap-6">
             {rows[1].map((item, idx) => (
               <Card key={item.n} item={item} index={idx + 4} />
             ))}
           </div>
           {/* Row 3: 5 cards */}
-          <div className="flex flex-wrap gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:auto-cols-max md:grid-flow-col md:[grid-auto-columns:minmax(0,auto)] gap-6">
             {rows[2].map((item, idx) => (
               <Card key={item.n} item={item} index={idx + 7} />
             ))}
@@ -203,18 +203,7 @@ export default function TriggersSection() {
         </div>
       </div>
 
-      {/* Bridge object proxy (lightweight wireframe) */}
-      <div className="mt-20 flex w-full items-center justify-center">
-        <div className="relative h-[200px] w-[200px]">
-          <div className="absolute inset-0 rounded-full" style={{
-            background: 'radial-gradient(50% 50% at 50% 50%, rgba(44,95,77,0.08) 0%, rgba(26,26,26,0.0) 70%)',
-            boxShadow: '0 20px 60px rgba(44,95,77,0.15)'
-          }} />
-          <div className="absolute inset-0 animate-spin-slow rounded-full" style={{ border: '1px dashed rgba(44,95,77,0.35)' }} />
-        </div>
-      </div>
-
-      {/* Bottom gradient transition */}
+      {/* Bottom gradient transition to next section */}
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[200px]" style={{
         background: 'linear-gradient(180deg, rgba(26,26,26,0) 0%, #1F1F1F 100%)'
       }} />
