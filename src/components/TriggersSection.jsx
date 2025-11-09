@@ -35,7 +35,8 @@ function Icon({ type }) {
           <path d="M21 28L39 20M21 32L39 40" className={common} strokeWidth="1.5" />
         </svg>
       );
-    case 'hourglass':\n      return (
+    case 'hourglass':
+      return (
         <svg width="60" height="60" viewBox="0 0 60 60" fill="none" className="transition-transform duration-500 group-hover:-translate-y-0.5">
           <path d="M18 12H42M18 48H42M20 14C20 24 40 24 40 30C40 36 20 36 20 46" className={common} strokeWidth="1.5" />
         </svg>
