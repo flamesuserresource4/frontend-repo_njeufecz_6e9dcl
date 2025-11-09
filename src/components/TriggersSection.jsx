@@ -114,10 +114,10 @@ function Card({ item, featured = false, index = 0 }) {
       whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       viewport={{ once: true, margin: '-20% 0px -20% 0px' }}
       transition={{ delay: 0.08 * index, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`group relative rounded-lg border ${featured ? 'bg-[#2C5F4D]' : 'bg-[#252525]'} ${featured ? 'border-[#3B7A64]' : 'border-[#333333]'} shadow-[inset_0_1px_0_rgba(255,255,255,0.02)] backdrop-blur-md w-full sm:w-[48%] md:${featured ? 'w-[300px]' : 'w-[280px]'} h-auto md:${featured ? 'h-[360px]' : 'h-[340px]'} transition-transform`}
+      className={`group relative w-full rounded-lg border ${featured ? 'bg-[#2C5F4D]' : 'bg-[#252525]'} ${featured ? 'border-[#3B7A64]' : 'border-[#333333]'} shadow-[inset_0_1px_0_rgba(255,255,255,0.02)] backdrop-blur-md h-[300px] sm:h-[320px] md:${featured ? 'h-[360px]' : 'h-[340px]'} transition-transform`}
     >
       <div className="pointer-events-none absolute inset-0 rounded-lg" style={{ boxShadow: 'inset 0 0 40px rgba(255,255,255,0.04)' }} />
-      <div className="flex h-full flex-col p-8">
+      <div className="flex h-full flex-col p-6 sm:p-7 md:p-8">
         <div className="flex items-start justify-between">
           <span className={`font-mono text-[14px] ${featured ? 'text-white' : 'text-[#2C5F4D]'}`} style={{ fontFamily: '"Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>{item.n}</span>
           {featured && (
@@ -130,10 +130,10 @@ function Card({ item, featured = false, index = 0 }) {
           <Icon type={item.icon} />
         </div>
         <div className="mt-5">
-          <h3 className={`font-serif text-[24px] leading-tight text-white`} style={{ fontFamily: '"Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif' }}>{item.name}</h3>
+          <h3 className={`font-serif text-[22px] sm:text-[24px] leading-tight text-white`} style={{ fontFamily: '"Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif' }}>{item.name}</h3>
         </div>
         <div className="mt-3">
-          <div className={`font-mono text-[32px] font-semibold ${featured ? 'text-white' : 'text-[#2C5F4D]'}`} style={{ fontFamily: '"Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>{item.metric}</div>
+          <div className={`font-mono text-[28px] sm:text-[32px] font-semibold ${featured ? 'text-white' : 'text-[#2C5F4D]'}`} style={{ fontFamily: '"Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>{item.metric}</div>
         </div>
         <p className={`mt-3 text-[14px] leading-[1.6] ${featured ? 'text-white/90' : 'text-[#AAAAAA]'}`}>{item.desc}</p>
       </div>
@@ -180,22 +180,22 @@ export default function TriggersSection() {
           </motion.p>
         </div>
 
-        {/* Grid with responsive rhythm: 1 column (xs), 2 columns (sm), asymmetric rows (md+) */}
+        {/* Grid with precise rhythm: 1 col (xs), 2 cols (sm), 4/3/5 at md+ */}
         <div className="flex flex-col gap-6">
           {/* Row 1: 4 cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:auto-cols-max md:grid-flow-col md:[grid-auto-columns:minmax(0,auto)] gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {rows[0].map((item, idx) => (
               <Card key={item.n} item={item} index={idx} featured={item.featured} />
             ))}
           </div>
           {/* Row 2: 3 cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:auto-cols-max md:grid-flow-col md:[grid-auto-columns:minmax(0,auto)] gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {rows[1].map((item, idx) => (
               <Card key={item.n} item={item} index={idx + 4} />
             ))}
           </div>
           {/* Row 3: 5 cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:auto-cols-max md:grid-flow-col md:[grid-auto-columns:minmax(0,auto)] gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
             {rows[2].map((item, idx) => (
               <Card key={item.n} item={item} index={idx + 7} />
             ))}
