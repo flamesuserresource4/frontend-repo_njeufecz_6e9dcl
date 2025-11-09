@@ -1,28 +1,46 @@
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import GradientMesh from './components/GradientMesh.jsx';
+import NeuralSpline from './components/NeuralSpline.jsx';
+import HeroContent from './components/HeroContent.jsx';
+import DataTicker from './components/DataTicker.jsx';
+import CTABar from './components/CTABar.jsx';
+import ScrollIndicator from './components/ScrollIndicator.jsx';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const p = Math.min(1, Math.max(0, window.scrollY / window.innerHeight));
+      setProgress(p);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
+    <div className="min-h-[200vh] bg-[#1A1A1A] relative text-white overflow-x-hidden">
+      {/* Layers: gradient bg, spline, content */}
+      <GradientMesh />
+      <NeuralSpline scrollProgress={progress} />
+      <HeroContent scrollProgress={progress} />
+      <DataTicker />
+      <CTABar />
+      <ScrollIndicator />
+
+      {/* Spacer to allow scroll-driven effects */}
+      <section id="framework" className="relative z-10 pt-[120vh] pb-24 px-6 md:px-12 lg:px-24">
+        <div className="max-w-5xl">
+          <h2 className="font-serif text-4xl md:text-5xl mb-6" style={{ fontFamily: 'Playfair Display, ui-serif' }}>
+            The Framework
+          </h2>
+          <p className="text-[#CFCFCF]/80 leading-7 max-w-3xl" style={{ fontFamily: 'Inter, ui-sans-serif' }}>
+            Our approach blends cognitive science with brand strategy to engineer the three moments that drive behavior: attention, emotion, and action. Scroll to watch the environment respond — the system is designed to create depth, focus, and measured momentum.
+          </p>
         </div>
-      </div>
+      </section>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
