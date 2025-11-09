@@ -21,7 +21,7 @@ export default function HeroSpline({ scrollProgress = 0 }) {
         }}
       >
         <Spline
-          scene="https://prod.spline.design/N8g2VNcx8Rycz93J/scene.splinecode"
+          scene="https://prod.spline.design/G0i6ZIv4Vd1oW14L/scene.splinecode"
           style={{ width: '100%', height: '100%' }}
         />
       </div>

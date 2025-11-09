@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useMemo, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const triggers = [
   { n: '01', name: 'Emotional Resonance', metric: '95% of decisions are subconscious', desc: 'Emotion encodes memory. We design moments that imprint feelings first, then information.', icon: 'heart' },
@@ -114,7 +114,7 @@ function Card({ item, featured = false, index = 0 }) {
       whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       viewport={{ once: true, margin: '-20% 0px -20% 0px' }}
       transition={{ delay: 0.08 * index, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`group relative w-full rounded-lg border ${featured ? 'bg-[#2C5F4D]' : 'bg-[#252525]'} ${featured ? 'border-[#3B7A64]' : 'border-[#333333]'} shadow-[inset_0_1px_0_rgba(255,255,255,0.02)] backdrop-blur-md h-[300px] sm:h-[320px] md:${featured ? 'h-[360px]' : 'h-[340px]'} transition-transform`}
+      className={`group relative w-full rounded-lg border ${featured ? 'bg-[#2C5F4D]' : 'bg-[#252525]'} ${featured ? 'border-[#3B7A64]' : 'border-[#333333]'} shadow-[inset_0_1px_0_rgba(255,255,255,0.02)] backdrop-blur-md min-h-[300px] sm:min-h-[320px] md:${featured ? 'min-h-[360px]' : 'min-h-[340px]'} transition-transform`}
     >
       <div className="pointer-events-none absolute inset-0 rounded-lg" style={{ boxShadow: 'inset 0 0 40px rgba(255,255,255,0.04)' }} />
       <div className="flex h-full flex-col p-6 sm:p-7 md:p-8">
@@ -133,9 +133,9 @@ function Card({ item, featured = false, index = 0 }) {
           <h3 className={`font-serif text-[22px] sm:text-[24px] leading-tight text-white`} style={{ fontFamily: '"Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif' }}>{item.name}</h3>
         </div>
         <div className="mt-3">
-          <div className={`font-mono text-[28px] sm:text-[32px] font-semibold ${featured ? 'text-white' : 'text-[#2C5F4D]'}`} style={{ fontFamily: '"Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>{item.metric}</div>
+          <div className={`font-mono text-[20px] sm:text-[22px] md:text-[24px] lg:text-[26px] font-semibold ${featured ? 'text-white' : 'text-[#2C5F4D]'}`} style={{ fontFamily: '"Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>{item.metric}</div>
         </div>
-        <p className={`mt-3 text-[14px] leading-[1.6] ${featured ? 'text-white/90' : 'text-[#AAAAAA]'}`}>{item.desc}</p>
+        <p className={`mt-3 text-[13px] sm:text-[14px] leading-[1.6] ${featured ? 'text-white/90' : 'text-[#AAAAAA]'} overflow-hidden`}>{item.desc}</p>
       </div>
       <style>{`
         .group:hover { transform: translateY(-8px); box-shadow: 0 16px 48px rgba(44,95,77,0.15); border-color: #2C5F4D !important; }
@@ -148,13 +148,19 @@ function Card({ item, featured = false, index = 0 }) {
 }
 
 export default function TriggersSection() {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
+  const yRow1 = useTransform(scrollYProgress, [0, 1], [0, -20]);
+  const yRow2 = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const yRow3 = useTransform(scrollYProgress, [0, 1], [0, -60]);
+
   const rows = useMemo(() => {
     const items = triggers.map((t, i) => ({ ...t, featured: i === 2 }));
     return [items.slice(0, 4), items.slice(4, 7), items.slice(7, 12)];
   }, []);
 
   return (
-    <section id="triggers" className="relative w-full bg-[#1A1A1A]">
+    <section id="triggers" ref={sectionRef} className="relative w-full bg-[#1A1A1A]">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8 md:px-12 lg:px-20" style={{ paddingTop: 120, paddingBottom: 120 }}>
         {/* Headline */}
         <div className="mb-10">
@@ -180,26 +186,26 @@ export default function TriggersSection() {
           </motion.p>
         </div>
 
-        {/* Grid with precise rhythm: 1 col (xs), 2 cols (sm), 4/3/5 at md+ */}
+        {/* Grid: 1 col (xs), 2 cols (sm), 4/3/5 at md+; each row with subtle parallax */}
         <div className="flex flex-col gap-6">
           {/* Row 1: 4 cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <motion.div style={{ y: yRow1 }} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {rows[0].map((item, idx) => (
               <Card key={item.n} item={item} index={idx} featured={item.featured} />
             ))}
-          </div>
+          </motion.div>
           {/* Row 2: 3 cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <motion.div style={{ y: yRow2 }} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {rows[1].map((item, idx) => (
               <Card key={item.n} item={item} index={idx + 4} />
             ))}
-          </div>
+          </motion.div>
           {/* Row 3: 5 cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
+          <motion.div style={{ y: yRow3 }} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
             {rows[2].map((item, idx) => (
               <Card key={item.n} item={item} index={idx + 7} />
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
 
