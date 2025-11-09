@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const triggers = [
   { n: '01', name: 'Emotional Resonance', metric: '95% of decisions are subconscious', desc: 'Emotion encodes memory. We design moments that imprint feelings first, then information.', icon: 'heart' },
@@ -17,7 +17,6 @@ const triggers = [
 ];
 
 function Icon({ type }) {
-  // Minimal, abstract inline SVGs per type
   const common = 'stroke-[#2C5F4D]';
   switch (type) {
     case 'heart':
@@ -115,10 +114,8 @@ function Card({ item, featured = false, index = 0 }) {
       whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       viewport={{ once: true, margin: '-20% 0px -20% 0px' }}
       transition={{ delay: 0.08 * index, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`group relative rounded-lg border ${featured ? 'bg-[#2C5F4D]' : 'bg-[#252525]'} ${featured ? 'border-[#3B7A64]' : 'border-[#333333]'} shadow-[inset_0_1px_0_rgba(255,255,255,0.02)] backdrop-blur-md`}
-      style={{ width: featured ? 300 : 280, height: featured ? 360 : 340 }}
+      className={`group relative rounded-lg border ${featured ? 'bg-[#2C5F4D]' : 'bg-[#252525]'} ${featured ? 'border-[#3B7A64]' : 'border-[#333333]'} shadow-[inset_0_1px_0_rgba(255,255,255,0.02)] backdrop-blur-md w-full md:${featured ? 'w-[300px]' : 'w-[280px]'} h-auto md:${featured ? 'h-[360px]' : 'h-[340px]'} transition-transform`}
     >
-      {/* subtle inner glow */}
       <div className="pointer-events-none absolute inset-0 rounded-lg" style={{ boxShadow: 'inset 0 0 40px rgba(255,255,255,0.04)' }} />
       <div className="flex h-full flex-col p-8">
         <div className="flex items-start justify-between">
@@ -133,14 +130,12 @@ function Card({ item, featured = false, index = 0 }) {
           <Icon type={item.icon} />
         </div>
         <div className="mt-5">
-          <h3 className={`font-serif text-[24px] leading-tight ${featured ? 'text-white' : 'text-white'}`}>{item.name}</h3>
+          <h3 className={`font-serif text-[24px] leading-tight text-white`}>{item.name}</h3>
         </div>
         <div className="mt-3">
-          <div className={`font-mono text-[28px] font-semibold ${featured ? 'text-white' : 'text-[#2C5F4D]'}`}>{item.metric}</div>
+          <div className={`font-mono text-[32px] font-semibold ${featured ? 'text-white' : 'text-[#2C5F4D]'}`}>{item.metric}</div>
         </div>
-        <p className={`mt-3 text-[14px] leading-relaxed ${featured ? 'text-white/90' : 'text-[#AAAAAA]'}`}>{item.desc}</p>
-        {/* hover lift */}
-        <div className="absolute inset-0 rounded-lg transition-all duration-500" style={{ boxShadow: '0 0 0 rgba(0,0,0,0)' }} />
+        <p className={`mt-3 text-[14px] leading-[1.6] ${featured ? 'text-white/90' : 'text-[#AAAAAA]'}`}>{item.desc}</p>
       </div>
       <style>{`
         .group:hover { transform: translateY(-8px); box-shadow: 0 16px 48px rgba(44,95,77,0.15); border-color: #2C5F4D !important; }
@@ -153,7 +148,6 @@ function Card({ item, featured = false, index = 0 }) {
 }
 
 export default function TriggersSection() {
-  // Build asymmetric rows: 4 / 3 / 5
   const rows = useMemo(() => {
     const items = triggers.map((t, i) => ({ ...t, featured: i === 2 }));
     return [items.slice(0, 4), items.slice(4, 7), items.slice(7, 12)];
@@ -163,24 +157,32 @@ export default function TriggersSection() {
     <section id="triggers" className="relative w-full bg-[#1A1A1A]">
       <div className="mx-auto max-w-[1400px] px-6 sm:px-10 md:px-14 lg:px-20" style={{ paddingTop: 120, paddingBottom: 120 }}>
         {/* Headline */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
-          className="mb-10"
-        >
-          <h2 className="font-serif text-[40px] sm:text-[48px] md:text-[56px] leading-tight text-white tracking-[-0.01em]" style={{ marginLeft: '100px' }}>
+        <div className="mb-10">
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
+            className="font-serif text-white tracking-[-0.01em] text-[40px] sm:text-[44px] md:text-[52px] lg:text-[64px] leading-tight"
+            style={{ marginLeft: '100px' }}
+          >
             The 12 Triggers<br />That Move Markets
-          </h2>
-          <p className="mt-4 max-w-[520px] text-[16px] sm:text-[18px] text-[#888888]" style={{ marginLeft: '100px' }}>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
+            className="mt-4 max-w-[520px] text-[16px] sm:text-[18px] text-[#888888]"
+            style={{ marginLeft: '100px' }}
+          >
             Each principle proven through neuroscience.<br />Every element engineered for response.
-          </p>
-        </motion.div>
+          </motion.p>
+        </div>
 
         {/* Grid */}
         <div className="flex flex-col gap-6">
-          {/* Row 1: 4 cards (wrap on mobile) */}
+          {/* Row 1: 4 cards (wraps to single column on mobile via w-full) */}
           <div className="flex flex-wrap gap-6">
             {rows[0].map((item, idx) => (
               <Card key={item.n} item={item} index={idx} featured={item.featured} />
@@ -201,13 +203,14 @@ export default function TriggersSection() {
         </div>
       </div>
 
-      {/* Spline bridge object */}
+      {/* Bridge object proxy (lightweight wireframe) */}
       <div className="mt-20 flex w-full items-center justify-center">
-        <div className="h-[200px] w-[200px] rounded-full border border-[#2C5F4D]/60" style={{
-          background: 'radial-gradient(50% 50% at 50% 50%, rgba(44,95,77,0.08) 0%, rgba(26,26,26,0.0) 70%)',
-          boxShadow: '0 20px 60px rgba(44,95,77,0.15)'
-        }}>
-          <div className="h-full w-full animate-spin-slow rounded-full" style={{ border: '1px dashed rgba(44,95,77,0.35)' }} />
+        <div className="relative h-[200px] w-[200px]">
+          <div className="absolute inset-0 rounded-full" style={{
+            background: 'radial-gradient(50% 50% at 50% 50%, rgba(44,95,77,0.08) 0%, rgba(26,26,26,0.0) 70%)',
+            boxShadow: '0 20px 60px rgba(44,95,77,0.15)'
+          }} />
+          <div className="absolute inset-0 animate-spin-slow rounded-full" style={{ border: '1px dashed rgba(44,95,77,0.35)' }} />
         </div>
       </div>
 
